@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class HomeTaskList extends StatelessWidget {
+class TaskListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container();

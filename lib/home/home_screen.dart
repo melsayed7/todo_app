@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/home/settings_screen/settings_screen.dart';
-import 'package:todo_app/home/task_list_screen/home_task_list.dart';
+import 'package:todo_app/home/task_list_screen/task_list_bottom_sheet.dart';
+import 'package:todo_app/home/task_list_screen/task_list_screen.dart';
 import 'package:todo_app/myTheme.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -11,7 +12,11 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  int currentIndex = 0;
+  int selectedIndex = 0;
+  List<Widget> tabs = [
+    TaskListScreen(),
+    SettingsScreen(),
+  ];
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +32,9 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () {
+          showAddTaskBottomSheet();
+        },
         shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(34),
             side: BorderSide(color: MyTheme.whiteColor, width: 4)),
@@ -42,9 +49,9 @@ class _HomeScreenState extends State<HomeScreen> {
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         child: BottomNavigationBar(
-          currentIndex: currentIndex,
+          currentIndex: selectedIndex,
           onTap: (index) {
-            currentIndex = index;
+            selectedIndex = index;
             setState(() {});
           },
           items: const [
@@ -61,12 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      body: tabs[currentIndex],
+      //body: tabs[selectedIndex],
     );
   }
 
-  List<Widget> tabs = [
-    HomeTaskList(),
-    SettingsScreen(),
-  ];
+  void showAddTaskBottomSheet() {
+    showModalBottomSheet(
+      context: context,
+      builder: (context) => TaskListBottomSheet(),
+    );
+  }
 }

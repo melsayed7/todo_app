@@ -28,6 +28,16 @@ class MyTheme {
           fontSize: 22,
           fontWeight: FontWeight.bold,
         ),
+        headline2: TextStyle(
+          color: blackColor,
+          fontSize: 20,
+          fontWeight: FontWeight.bold,
+        ),
+        subtitle1: TextStyle(
+          color: blackColor,
+          fontSize: 18,
+          fontWeight: FontWeight.bold,
+        ),
       ),
       scaffoldBackgroundColor: backgroundLightColor,
       bottomNavigationBarTheme: BottomNavigationBarThemeData(
