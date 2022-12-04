@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/myTheme.dart';
-import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:todo_app/provider/app_provider.dart';
+
 import 'home/home_screen.dart';
 
 void main() {
@@ -31,6 +32,7 @@ class MyApp extends StatelessWidget {
       locale: Locale(provider.appLanguage),
       theme: MyTheme.lightTheme,
       darkTheme: MyTheme.darkTheme,
+      themeMode: provider.appTheme,
     );
   }
 }

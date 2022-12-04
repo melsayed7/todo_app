@@ -1,12 +1,15 @@
 import 'package:calendar_timeline/calendar_timeline.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:todo_app/myTheme.dart';
+import 'package:todo_app/provider/app_provider.dart';
 
 import 'item_task_widget.dart';
 
 class TaskListScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<AppProvider>(context);
     return Container(
       child: Column(
         children: [
@@ -16,8 +19,12 @@ class TaskListScreen extends StatelessWidget {
             lastDate: DateTime.now().add(Duration(days: 365)),
             onDateSelected: (date) => print(date),
             leftMargin: 20,
-            monthColor: MyTheme.blackColor,
-            dayColor: MyTheme.blackColor,
+            monthColor: provider.isDarkTheme()
+                ? MyTheme.whiteColor
+                : MyTheme.blackColor,
+            dayColor: provider.isDarkTheme()
+                ? MyTheme.whiteColor
+                : MyTheme.blackColor,
             activeDayColor: MyTheme.primaryLightColor,
             activeBackgroundDayColor: MyTheme.whiteColor,
             dotsColor: MyTheme.primaryLightColor,
