@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        toolbarHeight: 157,
+        //toolbarHeight: 157,
         title: Padding(
           padding: const EdgeInsets.only(left: 52),
           child: Text(
@@ -68,7 +68,7 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-      //body: tabs[selectedIndex],
+      body: tabs[selectedIndex],
     );
   }
 

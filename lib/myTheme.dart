@@ -35,6 +35,11 @@ class MyTheme {
         ),
         subtitle1: TextStyle(
           color: blackColor,
+          fontSize: 16,
+          fontWeight: FontWeight.w400,
+        ),
+        bodyText1: TextStyle(
+          color: primaryLightColor,
           fontSize: 18,
           fontWeight: FontWeight.bold,
         ),
