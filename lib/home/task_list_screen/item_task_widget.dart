@@ -5,7 +5,7 @@ class ItemTaskWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      margin: const EdgeInsets.all(20),
+      margin: const EdgeInsets.all(15),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
         color: MyTheme.whiteColor,

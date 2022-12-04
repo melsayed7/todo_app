@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class TaskListBottomSheet extends StatelessWidget {
   @override
@@ -9,7 +10,7 @@ class TaskListBottomSheet extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
           Text(
-            'Add New Task',
+            AppLocalizations.of(context)!.addNewTask,
             style: Theme.of(context).primaryTextTheme.headline2,
             textAlign: TextAlign.center,
           ),
@@ -20,15 +21,15 @@ class TaskListBottomSheet extends StatelessWidget {
             child: Column(
               children: [
                 TextFormField(
-                  decoration:
-                      InputDecoration(hintText: 'Enter your task title'),
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.enterTask),
                 ),
                 const SizedBox(
                   height: 10,
                 ),
                 TextFormField(
-                  decoration:
-                      InputDecoration(hintText: 'Enter your task description'),
+                  decoration: InputDecoration(
+                      hintText: AppLocalizations.of(context)!.enterDescription),
                   maxLines: 4,
                   minLines: 4,
                 ),
@@ -39,7 +40,7 @@ class TaskListBottomSheet extends StatelessWidget {
             height: 18,
           ),
           Text(
-            'Select Date',
+            AppLocalizations.of(context)!.selectDate,
             style: Theme.of(context).primaryTextTheme.headline2,
           ),
           const SizedBox(
@@ -61,7 +62,7 @@ class TaskListBottomSheet extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Text(
-                'ADD',
+                AppLocalizations.of(context)!.add,
                 style: Theme.of(context).primaryTextTheme.headline1,
               ),
             ),

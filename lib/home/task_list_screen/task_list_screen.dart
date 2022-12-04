@@ -24,7 +24,14 @@ class TaskListScreen extends StatelessWidget {
             selectableDayPredicate: (date) => true,
             locale: 'en_ISO',
           ),
-          ItemTaskWidget(),
+          Expanded(
+            child: ListView.builder(
+              itemBuilder: (context, index) {
+                return ItemTaskWidget();
+              },
+              itemCount: 7,
+            ),
+          ),
         ],
       ),
     );

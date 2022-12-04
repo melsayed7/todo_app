@@ -1,0 +1,14 @@
+{
+"toDoList" : "قائمة المهام",
+"language" : "اللغة",
+"mode" : "الوضع",
+"english" : "الانجليزية",
+"arabic" : "العربية",
+"light" : "المضئ",
+"dark" : "الداكن",
+"addNewTask" : "اضافة مهام جديد",
+"selectDate" : "تحديد التاريخ",
+"enterTask" : "اضاف عنوان المهام",
+"enterDescription" : "اضاف وصف للمهام",
+"add" : "اضافة"
+}
