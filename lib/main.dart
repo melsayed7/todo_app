@@ -1,12 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
 
 import 'home/home_screen.dart';
 
-void main() {
+String saveLanguage = 'en';
+ThemeMode saveTheme = ThemeMode.light;
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  final prefs = await SharedPreferences.getInstance();
+  saveLanguage = prefs.getString('language') ?? '';
+  if (prefs.getString('theme') == 'light') {
+    saveTheme = ThemeMode.light;
+  } else if (prefs.getString('theme') == 'dark') {
+    saveTheme = ThemeMode.dark;
+  }
   runApp(
     ChangeNotifierProvider(
       create: (BuildContext context) => AppProvider(),

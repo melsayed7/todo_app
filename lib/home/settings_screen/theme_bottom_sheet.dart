@@ -15,26 +15,32 @@ class _ThemeBottomSheetState extends State<ThemeBottomSheet> {
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
     return Container(
-      margin: const EdgeInsets.all(30),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              provider.changeTheme(ThemeMode.dark);
-            },
-            child: provider.appTheme == ThemeMode.dark
-                ? getSelectedTheme(AppLocalizations.of(context)!.dark)
-                : getUnSelectedTheme(AppLocalizations.of(context)!.dark),
-          ),
-          InkWell(
-            onTap: () {
-              provider.changeTheme(ThemeMode.light);
-            },
-            child: provider.appTheme == ThemeMode.light
-                ? getSelectedTheme(AppLocalizations.of(context)!.light)
-                : getUnSelectedTheme(AppLocalizations.of(context)!.light),
-          ),
-        ],
+      color: provider.isDarkTheme()
+          ? MyTheme.backgroundDarkColor
+          : MyTheme.backgroundLightColor,
+      child: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () {
+                provider.changeTheme(ThemeMode.dark);
+              },
+              child: provider.appTheme == ThemeMode.dark
+                  ? getSelectedTheme(AppLocalizations.of(context)!.dark)
+                  : getUnSelectedTheme(AppLocalizations.of(context)!.dark),
+            ),
+            InkWell(
+              onTap: () {
+                provider.changeTheme(ThemeMode.light);
+              },
+              child: provider.appTheme == ThemeMode.light
+                  ? getSelectedTheme(AppLocalizations.of(context)!.light)
+                  : getUnSelectedTheme(AppLocalizations.of(context)!.light),
+            ),
+          ],
+        ),
       ),
     );
   }

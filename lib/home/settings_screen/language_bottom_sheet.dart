@@ -14,26 +14,33 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
     return Container(
-      margin: const EdgeInsets.all(30),
-      child: Column(
-        children: [
-          InkWell(
-            onTap: () {
-              provider.changeLanguage('en');
-            },
-            child: provider.appLanguage == 'en'
-                ? getSelectedLanguage(AppLocalizations.of(context)!.english)
-                : getUnSelectedLanguage(AppLocalizations.of(context)!.english),
-          ),
-          InkWell(
-            onTap: () {
-              provider.changeLanguage('ar');
-            },
-            child: provider.appLanguage == 'ar'
-                ? getSelectedLanguage(AppLocalizations.of(context)!.arabic)
-                : getUnSelectedLanguage(AppLocalizations.of(context)!.arabic),
-          ),
-        ],
+      color: provider.isDarkTheme()
+          ? MyTheme.backgroundDarkColor
+          : MyTheme.backgroundLightColor,
+      child: Padding(
+        padding: const EdgeInsets.all(25),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            InkWell(
+              onTap: () {
+                provider.changeLanguage('en');
+              },
+              child: provider.appLanguage == 'en'
+                  ? getSelectedLanguage(AppLocalizations.of(context)!.english)
+                  : getUnSelectedLanguage(
+                      AppLocalizations.of(context)!.english),
+            ),
+            InkWell(
+              onTap: () {
+                provider.changeLanguage('ar');
+              },
+              child: provider.appLanguage == 'ar'
+                  ? getSelectedLanguage(AppLocalizations.of(context)!.arabic)
+                  : getUnSelectedLanguage(AppLocalizations.of(context)!.arabic),
+            ),
+          ],
+        ),
       ),
     );
   }

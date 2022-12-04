@@ -74,7 +74,9 @@ class SettingsScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    AppLocalizations.of(context)!.mode,
+                    provider.isDarkTheme()
+                        ? AppLocalizations.of(context)!.dark
+                        : AppLocalizations.of(context)!.light,
                     style: Theme.of(context).primaryTextTheme.bodyText1,
                   ),
                   Icon(
