@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
@@ -12,6 +14,10 @@ ThemeMode saveTheme = ThemeMode.light;
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  //Firebase
+  await Firebase.initializeApp();
+  await FirebaseFirestore.instance.disableNetwork();
+  //shared preference
   final prefs = await SharedPreferences.getInstance();
   saveLanguage = prefs.getString('language') ?? '';
   if (prefs.getString('theme') == 'light') {

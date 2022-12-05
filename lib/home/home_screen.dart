@@ -50,46 +50,44 @@ class _HomeScreenState extends State<HomeScreen> {
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
-      bottomNavigationBar: Theme(
-        data: provider.isDarkTheme()
-            ? Theme.of(context).copyWith(canvasColor: MyTheme.bottomNavBarColor)
-            : Theme.of(context).copyWith(canvasColor: MyTheme.whiteColor),
-        child: BottomAppBar(
-          shape: const CircularNotchedRectangle(),
-          notchMargin: 8,
-          child: BottomNavigationBar(
-            currentIndex: selectedIndex,
-            onTap: (index) {
-              selectedIndex = index;
-              switch (index) {
-                case 0:
-                  {
-                    title = AppLocalizations.of(context)!.toDoList;
-                  }
-                  break;
-                case 1:
-                  {
-                    title = AppLocalizations.of(context)!.settings;
-                  }
-                  break;
-              }
-              setState(() {});
-            },
-            items: const [
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage('assets/images/icon_task_list.png'),
-                ),
-                label: '',
+      bottomNavigationBar: BottomAppBar(
+        color: provider.isDarkTheme()
+            ? MyTheme.bottomNavBarColor
+            : MyTheme.whiteColor,
+        shape: const CircularNotchedRectangle(),
+        notchMargin: 8,
+        child: BottomNavigationBar(
+          currentIndex: selectedIndex,
+          onTap: (index) {
+            selectedIndex = index;
+            switch (index) {
+              case 0:
+                {
+                  title = AppLocalizations.of(context)!.toDoList;
+                }
+                break;
+              case 1:
+                {
+                  title = AppLocalizations.of(context)!.settings;
+                }
+                break;
+            }
+            setState(() {});
+          },
+          items: const [
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/icon_task_list.png'),
               ),
-              BottomNavigationBarItem(
-                icon: ImageIcon(
-                  AssetImage('assets/images/Icon_settings.png'),
-                ),
-                label: '',
+              label: '',
+            ),
+            BottomNavigationBarItem(
+              icon: ImageIcon(
+                AssetImage('assets/images/Icon_settings.png'),
               ),
-            ],
-          ),
+              label: '',
+            ),
+          ],
         ),
       ),
       body: tabs[selectedIndex],
