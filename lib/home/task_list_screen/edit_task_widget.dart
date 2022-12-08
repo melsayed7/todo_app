@@ -4,22 +4,31 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
 
-class TaskListBottomSheet extends StatefulWidget {
+class EditTaskWidget extends StatefulWidget {
+  static const String routeName = 'edit_task_widget';
+
   @override
-  State<TaskListBottomSheet> createState() => _TaskListBottomSheetState();
+  State<EditTaskWidget> createState() => _EditTaskWidget();
 }
 
-class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
+class _EditTaskWidget extends State<EditTaskWidget> {
   DateTime selectedDate = DateTime.now();
   final formKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
-    return SingleChildScrollView(
-      child: Container(
-        //margin: const EdgeInsets.all(15),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(
+          AppLocalizations.of(context)!.toDoList,
+          style: Theme.of(context).primaryTextTheme.headline1,
+        ),
+      ),
+      body: Container(
+        margin: const EdgeInsets.all(20),
         decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(20),
           color: provider.isDarkTheme()
               ? MyTheme.bottomNavBarColor
               : MyTheme.whiteColor,
@@ -30,13 +39,11 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Text(
-                AppLocalizations.of(context)!.addNewTask,
+                AppLocalizations.of(context)!.editTask,
                 style: Theme.of(context).primaryTextTheme.headline2,
                 textAlign: TextAlign.center,
               ),
-              const SizedBox(
-                height: 18,
-              ),
+              const Spacer(flex: 1),
               Form(
                 key: formKey,
                 child: Column(
@@ -88,16 +95,12 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 18,
-              ),
+              const SizedBox(height: 20),
               Text(
                 AppLocalizations.of(context)!.selectDate,
                 style: Theme.of(context).primaryTextTheme.headline2,
               ),
-              const SizedBox(
-                height: 18,
-              ),
+              const SizedBox(height: 20),
               InkWell(
                 onTap: () {
                   showDate();
@@ -108,9 +111,7 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                   textAlign: TextAlign.center,
                 ),
               ),
-              const SizedBox(
-                height: 20,
-              ),
+              const Spacer(flex: 1),
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {}
@@ -124,11 +125,12 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                 child: Padding(
                   padding: const EdgeInsets.all(12),
                   child: Text(
-                    AppLocalizations.of(context)!.add,
+                    AppLocalizations.of(context)!.saveChanges,
                     style: Theme.of(context).primaryTextTheme.headline1,
                   ),
                 ),
               ),
+              const Spacer(flex: 2),
             ],
           ),
         ),

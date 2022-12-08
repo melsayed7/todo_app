@@ -7,9 +7,13 @@
 "arabic" : "العربية",
 "light" : "المضئ",
 "dark" : "الداكن",
-"addNewTask" : "اضافة مهامة جديدة",
+"addNewTask" : "اضافة مهمة جديدة",
 "selectDate" : "تحديد التاريخ",
-"enterTask" : "اضاف عنوان المهامة",
-"enterDescription" : "اضاف وصف للمهامة",
-"add" : "اضافة"
+"enterTask" : "اضاف عنوان للمهمة",
+"enterDescription" : "اضاف وصف للمهمة",
+"add" : "اضافة",
+"editTask" : "تعديل المهام" ,
+"saveChanges" : "حفظ التعديلات" ,
+"entreTitle" : "الرجاء ادخال عنوان للمهمة",
+"description" : "الرجاء ادخال وصف للمهمة"
 }

@@ -20,15 +20,18 @@ class _HomeScreenState extends State<HomeScreen> {
     TaskListScreen(),
     SettingsScreen(),
   ];
-  String title = '';
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
+    List<String> title = [
+      AppLocalizations.of(context)!.toDoList,
+      AppLocalizations.of(context)!.settings,
+    ];
     return Scaffold(
       appBar: AppBar(
         title: Text(
-          title,
+          title[selectedIndex],
           style: Theme.of(context).primaryTextTheme.headline1,
         ),
       ),
@@ -63,12 +66,12 @@ class _HomeScreenState extends State<HomeScreen> {
             switch (index) {
               case 0:
                 {
-                  title = AppLocalizations.of(context)!.toDoList;
+                  title[0];
                 }
                 break;
               case 1:
                 {
-                  title = AppLocalizations.of(context)!.settings;
+                  title[1];
                 }
                 break;
             }

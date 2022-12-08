@@ -8,6 +8,7 @@ import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
 
 import 'home/home_screen.dart';
+import 'home/task_list_screen/edit_task_widget.dart';
 
 String saveLanguage = 'en';
 ThemeMode saveTheme = ThemeMode.light;
@@ -44,6 +45,7 @@ class MyApp extends StatelessWidget {
       initialRoute: HomeScreen.routeName,
       routes: {
         HomeScreen.routeName: (context) => HomeScreen(),
+        EditTaskWidget.routeName: (context) => EditTaskWidget(),
       },
       localizationsDelegates: AppLocalizations.localizationsDelegates,
       supportedLocales: AppLocalizations.supportedLocales,

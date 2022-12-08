@@ -11,5 +11,9 @@
 "selectDate" : "Select Date",
 "enterTask" : "Enter your task title",
 "enterDescription" : "Enter your taskDescription",
-"add" : "ADD"
+"add" : "ADD",
+"editTask" : "Edit Task" ,
+"saveChanges" : "Save Changes",
+"entreTitle" : "Please entre task title",
+"description" : "Please entre task description"
 }
