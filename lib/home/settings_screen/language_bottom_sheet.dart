@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/myColor.dart';
 
 class LanguageBottomSheet extends StatefulWidget {
   @override
@@ -15,8 +15,8 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
     var provider = Provider.of<AppProvider>(context);
     return Container(
       color: provider.isDarkTheme()
-          ? MyTheme.backgroundDarkColor
-          : MyTheme.backgroundLightColor,
+          ? MyColor.backgroundDarkColor
+          : MyColor.backgroundLightColor,
       child: Padding(
         padding: const EdgeInsets.all(25),
         child: Column(
@@ -46,7 +46,6 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
   }
 
   Widget getSelectedLanguage(String text) {
-    var provider = Provider.of<AppProvider>(context);
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
@@ -57,7 +56,7 @@ class _LanguageBottomSheetState extends State<LanguageBottomSheet> {
         Icon(
           Icons.check,
           size: 30,
-          color: MyTheme.primaryLightColor,
+          color: MyColor.primaryLightColor,
         )
       ],
     );

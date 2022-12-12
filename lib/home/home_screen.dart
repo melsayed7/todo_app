@@ -4,8 +4,8 @@ import 'package:provider/provider.dart';
 import 'package:todo_app/home/settings_screen/settings_screen.dart';
 import 'package:todo_app/home/task_list_screen/task_list_bottom_sheet.dart';
 import 'package:todo_app/home/task_list_screen/task_list_screen.dart';
-import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/myColor.dart';
 
 class HomeScreen extends StatefulWidget {
   static const String routeName = 'home_screen';
@@ -43,20 +43,20 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(34),
             side: BorderSide(
                 color: provider.isDarkTheme()
-                    ? MyTheme.bottomNavBarColor
-                    : MyTheme.whiteColor,
+                    ? MyColor.bottomNavBarColor
+                    : MyColor.whiteColor,
                 width: 4)),
         child: Icon(
           Icons.add,
-          color: MyTheme.whiteColor,
+          color: MyColor.whiteColor,
           size: 30,
         ),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: BottomAppBar(
         color: provider.isDarkTheme()
-            ? MyTheme.bottomNavBarColor
-            : MyTheme.whiteColor,
+            ? MyColor.bottomNavBarColor
+            : MyColor.whiteColor,
         shape: const CircularNotchedRectangle(),
         notchMargin: 8,
         child: BottomNavigationBar(

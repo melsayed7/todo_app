@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/myTheme.dart';
+import 'package:todo_app/model/task_model.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/MyColor.dart';
+
+import '../../model/firebase_utils.dart';
 
 class TaskListBottomSheet extends StatefulWidget {
   @override
@@ -12,6 +16,8 @@ class TaskListBottomSheet extends StatefulWidget {
 class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
   DateTime selectedDate = DateTime.now();
   final formKey = GlobalKey<FormState>();
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +27,8 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
         //margin: const EdgeInsets.all(15),
         decoration: BoxDecoration(
           color: provider.isDarkTheme()
-              ? MyTheme.bottomNavBarColor
-              : MyTheme.whiteColor,
+              ? MyColor.bottomNavBarColor
+              : MyColor.whiteColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -42,6 +48,7 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: titleController,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return AppLocalizations.of(context)!.entreTitle;
@@ -50,20 +57,21 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                       },
                       style: TextStyle(
                           color: provider.isDarkTheme()
-                              ? MyTheme.whiteColor
-                              : MyTheme.blackColor),
+                              ? MyColor.whiteColor
+                              : MyColor.blackColor),
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.enterTask,
                         hintStyle: TextStyle(
                             color: provider.isDarkTheme()
-                                ? MyTheme.whiteColor
-                                : MyTheme.blackColor),
+                                ? MyColor.whiteColor
+                                : MyColor.blackColor),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
+                      controller: descriptionController,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return AppLocalizations.of(context)!.description;
@@ -72,15 +80,15 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
                       },
                       style: TextStyle(
                           color: provider.isDarkTheme()
-                              ? MyTheme.whiteColor
-                              : MyTheme.blackColor),
+                              ? MyColor.whiteColor
+                              : MyColor.blackColor),
                       decoration: InputDecoration(
                         hintText:
                             AppLocalizations.of(context)!.enterDescription,
                         hintStyle: TextStyle(
                             color: provider.isDarkTheme()
-                                ? MyTheme.whiteColor
-                                : MyTheme.blackColor),
+                                ? MyColor.whiteColor
+                                : MyColor.blackColor),
                       ),
                       maxLines: 4,
                       minLines: 4,
@@ -113,10 +121,30 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
               ),
               ElevatedButton(
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {}
+                  if (formKey.currentState!.validate()) {
+                    TaskModel taskModel = TaskModel(
+                        title: titleController.text,
+                        description: descriptionController.text,
+                        date: DateUtils.dateOnly(selectedDate)
+                            .microsecondsSinceEpoch);
+                    addTaskToFirebase(taskModel).timeout(
+                      const Duration(microseconds: 500),
+                      onTimeout: () {
+                        Navigator.pop(context);
+                        Fluttertoast.showToast(
+                            msg: 'Task added successfully',
+                            toastLength: Toast.LENGTH_LONG,
+                            gravity: ToastGravity.BOTTOM,
+                            timeInSecForIosWeb: 5,
+                            backgroundColor: MyColor.greenColor,
+                            textColor: Colors.white,
+                            fontSize: 20.0);
+                      },
+                    );
+                  }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: MyTheme.primaryLightColor,
+                  backgroundColor: MyColor.primaryLightColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -137,17 +165,15 @@ class _TaskListBottomSheetState extends State<TaskListBottomSheet> {
   }
 
   Future<void> showDate() async {
-    var dateShow = await showDatePicker(
+    var chosenDate = await showDatePicker(
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
-    if (dateShow == null) {
-      return;
+    if (chosenDate != null) {
+      selectedDate = chosenDate;
     }
-    selectedDate = dateShow;
     setState(() {});
-    print(selectedDate);
   }
 }

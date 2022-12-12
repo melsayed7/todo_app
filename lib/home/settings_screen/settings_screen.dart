@@ -3,8 +3,8 @@ import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 import 'package:provider/provider.dart';
 import 'package:todo_app/home/settings_screen/language_bottom_sheet.dart';
 import 'package:todo_app/home/settings_screen/theme_bottom_sheet.dart';
-import 'package:todo_app/myTheme.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/myColor.dart';
 
 class SettingsScreen extends StatelessWidget {
   @override
@@ -26,9 +26,9 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
             decoration: BoxDecoration(
               color: provider.isDarkTheme()
-                  ? MyTheme.bottomNavBarColor
-                  : MyTheme.whiteColor,
-              border: Border.all(color: MyTheme.primaryLightColor),
+                  ? MyColor.bottomNavBarColor
+                  : MyColor.whiteColor,
+              border: Border.all(color: MyColor.primaryLightColor),
             ),
             child: InkWell(
               onTap: () {
@@ -46,7 +46,7 @@ class SettingsScreen extends StatelessWidget {
                   Icon(
                     Icons.arrow_drop_down_outlined,
                     size: 30,
-                    color: MyTheme.primaryLightColor,
+                    color: MyColor.primaryLightColor,
                   )
                 ],
               ),
@@ -63,9 +63,9 @@ class SettingsScreen extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 12),
             decoration: BoxDecoration(
                 color: provider.isDarkTheme()
-                    ? MyTheme.bottomNavBarColor
-                    : MyTheme.whiteColor,
-                border: Border.all(color: MyTheme.primaryLightColor)),
+                    ? MyColor.bottomNavBarColor
+                    : MyColor.whiteColor,
+                border: Border.all(color: MyColor.primaryLightColor)),
             child: InkWell(
               onTap: () {
                 showThemeBottomSheet(context);
@@ -82,7 +82,7 @@ class SettingsScreen extends StatelessWidget {
                   Icon(
                     Icons.arrow_drop_down_outlined,
                     size: 30,
-                    color: MyTheme.primaryLightColor,
+                    color: MyColor.primaryLightColor,
                   )
                 ],
               ),

@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/myTheme.dart';
+import 'package:todo_app/model/task_model.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/myColor.dart';
+
+import '../../model/firebase_utils.dart';
 
 class EditTaskWidget extends StatefulWidget {
   static const String routeName = 'edit_task_widget';
@@ -14,10 +18,16 @@ class EditTaskWidget extends StatefulWidget {
 class _EditTaskWidget extends State<EditTaskWidget> {
   DateTime selectedDate = DateTime.now();
   final formKey = GlobalKey<FormState>();
+  var titleController = TextEditingController();
+  var descriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
+    var args = ModalRoute.of(context)?.settings.arguments as TaskModel;
+    titleController.text = args.title;
+    descriptionController.text = args.description;
+    selectedDate = DateTime.fromMicrosecondsSinceEpoch(args.date);
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -30,8 +40,8 @@ class _EditTaskWidget extends State<EditTaskWidget> {
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(20),
           color: provider.isDarkTheme()
-              ? MyTheme.bottomNavBarColor
-              : MyTheme.whiteColor,
+              ? MyColor.bottomNavBarColor
+              : MyColor.whiteColor,
         ),
         child: Padding(
           padding: const EdgeInsets.all(20),
@@ -49,6 +59,7 @@ class _EditTaskWidget extends State<EditTaskWidget> {
                 child: Column(
                   children: [
                     TextFormField(
+                      controller: titleController,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return AppLocalizations.of(context)!.entreTitle;
@@ -57,20 +68,21 @@ class _EditTaskWidget extends State<EditTaskWidget> {
                       },
                       style: TextStyle(
                           color: provider.isDarkTheme()
-                              ? MyTheme.whiteColor
-                              : MyTheme.blackColor),
+                              ? MyColor.whiteColor
+                              : MyColor.blackColor),
                       decoration: InputDecoration(
                         hintText: AppLocalizations.of(context)!.enterTask,
                         hintStyle: TextStyle(
                             color: provider.isDarkTheme()
-                                ? MyTheme.whiteColor
-                                : MyTheme.blackColor),
+                                ? MyColor.whiteColor
+                                : MyColor.blackColor),
                       ),
                     ),
                     const SizedBox(
                       height: 10,
                     ),
                     TextFormField(
+                      controller: descriptionController,
                       validator: (text) {
                         if (text == null || text.isEmpty) {
                           return AppLocalizations.of(context)!.description;
@@ -79,18 +91,18 @@ class _EditTaskWidget extends State<EditTaskWidget> {
                       },
                       style: TextStyle(
                           color: provider.isDarkTheme()
-                              ? MyTheme.whiteColor
-                              : MyTheme.blackColor),
+                              ? MyColor.whiteColor
+                              : MyColor.blackColor),
                       decoration: InputDecoration(
                         hintText:
                             AppLocalizations.of(context)!.enterDescription,
                         hintStyle: TextStyle(
                             color: provider.isDarkTheme()
-                                ? MyTheme.whiteColor
-                                : MyTheme.blackColor),
+                                ? MyColor.whiteColor
+                                : MyColor.blackColor),
                       ),
-                      maxLines: 4,
-                      minLines: 4,
+                      maxLines: 3,
+                      minLines: 3,
                     ),
                   ],
                 ),
@@ -114,10 +126,26 @@ class _EditTaskWidget extends State<EditTaskWidget> {
               const Spacer(flex: 1),
               ElevatedButton(
                 onPressed: () {
-                  if (formKey.currentState!.validate()) {}
+                  if (formKey.currentState!.validate()) {
+                    updateTaskFromFirebase(toJson: {
+                      'id': args.id,
+                      'title': titleController.text,
+                      'description': descriptionController.text,
+                      'date': args.date,
+                      'isDone': args.isDone
+                    });
+                    Fluttertoast.showToast(
+                        msg: 'Task updated successfully',
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 5,
+                        backgroundColor: MyColor.primaryLightColor,
+                        textColor: Colors.white,
+                        fontSize: 18.0);
+                  }
                 },
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: MyTheme.primaryLightColor,
+                  backgroundColor: MyColor.primaryLightColor,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
@@ -143,12 +171,11 @@ class _EditTaskWidget extends State<EditTaskWidget> {
       context: context,
       initialDate: selectedDate,
       firstDate: DateTime.now(),
-      lastDate: DateTime.now().add(Duration(days: 365)),
+      lastDate: DateTime.now().add(const Duration(days: 365)),
     );
-    if (dateShow == null) {
-      return;
+    if (dateShow != null) {
+      selectedDate = dateShow;
     }
-    selectedDate = dateShow;
     setState(() {});
     print(selectedDate);
   }

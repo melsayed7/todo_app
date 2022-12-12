@@ -5,8 +5,8 @@ import '../main.dart';
 
 class AppProvider extends ChangeNotifier {
   String appLanguage = saveLanguage;
-
   ThemeMode appTheme = saveTheme;
+  DateTime dateTime = DateTime.now();
 
   Future<void> changeLanguage(String newLanguage) async {
     if (appLanguage == newLanguage) {
@@ -32,4 +32,12 @@ class AppProvider extends ChangeNotifier {
   bool isDarkTheme() {
     return appTheme == ThemeMode.dark;
   }
+
+  void getChosenDate(DateTime newDate) {
+    dateTime = newDate;
+    notifyListeners();
+  }
+
+// firebase
+
 }

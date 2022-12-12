@@ -1,78 +1,125 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:provider/provider.dart';
-import 'package:todo_app/myTheme.dart';
+import 'package:todo_app/model/firebase_utils.dart';
+import 'package:todo_app/model/task_model.dart';
 import 'package:todo_app/provider/app_provider.dart';
+import 'package:todo_app/style/myColor.dart';
 
 import 'edit_task_widget.dart';
 
 class ItemTaskWidget extends StatelessWidget {
+  TaskModel taskModel;
+
+  ItemTaskWidget({required this.taskModel});
+
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
     return InkWell(
       onTap: () {
-        Navigator.pushNamed(context, EditTaskWidget.routeName);
+        Navigator.pushNamed(context, EditTaskWidget.routeName,
+            arguments: taskModel);
       },
-      child: Slidable(
-        startActionPane: ActionPane(motion: const DrawerMotion(), children: [
-          SlidableAction(
-            autoClose: false,
-            borderRadius: BorderRadius.circular(10),
-            onPressed: (context) {},
-            backgroundColor: MyTheme.redColor,
-            foregroundColor: Colors.white,
-            icon: Icons.delete,
-            label: 'Delete',
-          ),
-        ]),
-        child: Container(
-          margin: const EdgeInsets.all(15),
-          padding: const EdgeInsets.all(20),
-          decoration: BoxDecoration(
-            color: provider.isDarkTheme()
-                ? MyTheme.bottomNavBarColor
-                : MyTheme.whiteColor,
-            borderRadius: BorderRadius.circular(15),
-          ),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Container(
-                height: 62,
-                width: 4,
-                color: MyTheme.primaryLightColor,
-              ),
-              Column(
-                //crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    'Play Basket ball',
-                    style: Theme.of(context).primaryTextTheme.bodyText1,
-                  ),
-                  const SizedBox(
-                    height: 5,
-                  ),
-                  Text(
-                    'Description',
-                    style: Theme.of(context).primaryTextTheme.subtitle1,
-                  ),
-                ],
-              ),
-              Container(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: MyTheme.primaryLightColor),
-                child: IconButton(
-                  onPressed: () {},
-                  icon: ImageIcon(
-                    const AssetImage('assets/images/Icon_check.png'),
-                    color: MyTheme.whiteColor,
+      child: Padding(
+        padding: const EdgeInsets.all(8),
+        child: Slidable(
+          startActionPane: ActionPane(
+              extentRatio: .25,
+              motion: const StretchMotion(),
+              children: [
+                SlidableAction(
+                  onPressed: (context) {
+                    deleteTaskFromFirebase(taskModel);
+                    Fluttertoast.showToast(
+                        msg: 'Task deleted successfully',
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.BOTTOM,
+                        timeInSecForIosWeb: 5,
+                        backgroundColor: MyColor.redColor,
+                        textColor: Colors.white,
+                        fontSize: 20.0);
+                  },
+                  borderRadius: BorderRadius.circular(10),
+                  backgroundColor: MyColor.redColor,
+                  foregroundColor: Colors.white,
+                  icon: Icons.delete,
+                  label: 'Delete',
+                ),
+              ]),
+          child: Container(
+            margin: const EdgeInsets.all(15),
+            padding: const EdgeInsets.all(20),
+            decoration: BoxDecoration(
+              color: provider.isDarkTheme()
+                  ? MyColor.bottomNavBarColor
+                  : MyColor.whiteColor,
+              borderRadius: BorderRadius.circular(15),
+            ),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Container(
+                  height: 62,
+                  width: 4,
+                  color: MyColor.primaryLightColor,
+                ),
+                Flexible(
+                  child: Padding(
+                    padding: const EdgeInsets.only(left: 15, right: 15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.stretch,
+                      children: [
+                        Text(
+                          taskModel.title,
+                          style: taskModel.isDone == true
+                              ? Theme.of(context).primaryTextTheme.bodyText2
+                              : Theme.of(context).primaryTextTheme.bodyText1,
+                        ),
+                        const SizedBox(
+                          height: 5,
+                        ),
+                        Text(
+                          taskModel.description,
+                          maxLines: 2,
+                          style: Theme.of(context).primaryTextTheme.subtitle1,
+                        ),
+                      ],
+                    ),
                   ),
                 ),
-              ),
-            ],
+                InkWell(
+                  onTap: () {
+                    updateDoneTaskFromFirebase(taskModel);
+                    Fluttertoast.showToast(
+                        msg: 'Congratulations you finished the task',
+                        toastLength: Toast.LENGTH_LONG,
+                        gravity: ToastGravity.TOP,
+                        timeInSecForIosWeb: 5,
+                        backgroundColor: MyColor.greenColor,
+                        textColor: Colors.white,
+                        fontSize: 18.0);
+                  },
+                  child: taskModel.isDone == true
+                      ? Text(
+                          'Done!',
+                          style: Theme.of(context).primaryTextTheme.headline3,
+                        )
+                      : Container(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 8, horizontal: 24),
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: MyColor.primaryLightColor),
+                          child: Image.asset(
+                            'assets/images/Icon_check.png',
+                            color: MyColor.whiteColor,
+                          ),
+                        ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
