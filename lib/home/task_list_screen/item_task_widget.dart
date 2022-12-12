@@ -91,15 +91,35 @@ class ItemTaskWidget extends StatelessWidget {
                 ),
                 InkWell(
                   onTap: () {
-                    updateDoneTaskFromFirebase(taskModel);
-                    Fluttertoast.showToast(
-                        msg: 'Congratulations you finished the task',
-                        toastLength: Toast.LENGTH_LONG,
-                        gravity: ToastGravity.TOP,
-                        timeInSecForIosWeb: 5,
-                        backgroundColor: MyColor.greenColor,
-                        textColor: Colors.white,
-                        fontSize: 18.0);
+                    showDialog<String>(
+                      context: context,
+                      builder: (BuildContext context) => AlertDialog(
+                        title: const Text('Have you finish task ?'),
+                        content: const Text(
+                            'If you finish task press (OK) \n not finish press (Cancel)'),
+                        actions: <Widget>[
+                          TextButton(
+                            onPressed: () => Navigator.pop(context, 'Cancel'),
+                            child: const Text('Cancel'),
+                          ),
+                          TextButton(
+                            onPressed: () {
+                              updateDoneTaskFromFirebase(taskModel);
+                              Fluttertoast.showToast(
+                                  msg: 'Congratulations you finished the task',
+                                  toastLength: Toast.LENGTH_LONG,
+                                  gravity: ToastGravity.TOP,
+                                  timeInSecForIosWeb: 5,
+                                  backgroundColor: MyColor.greenColor,
+                                  textColor: Colors.white,
+                                  fontSize: 18.0);
+                              Navigator.pop(context, 'OK');
+                            },
+                            child: const Text('OK'),
+                          ),
+                        ],
+                      ),
+                    );
                   },
                   child: taskModel.isDone == true
                       ? Text(
