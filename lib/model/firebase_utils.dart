@@ -32,7 +32,8 @@ Future<void> updateDoneTaskFromFirebase(TaskModel model) {
   return getTaskCollectionReference().doc(model.id).update({'isDone': true});
 }
 
-Future<void> updateTaskFromFirebase({required Map<String, dynamic> toJson}) {
-  final docRef = getTaskCollectionReference().doc(toJson['id']);
-  return docRef.update(toJson);
+Future<void> updateTaskFromFirebase(TaskModel model) {
+  return getTaskCollectionReference().doc(model.id).update(model.toJson());
+  /*final docRef = getTaskCollectionReference().doc(toJson['id']);
+  return docRef.update(toJson);*/
 }

@@ -37,7 +37,4 @@ class AppProvider extends ChangeNotifier {
     dateTime = newDate;
     notifyListeners();
   }
-
-// firebase
-
 }

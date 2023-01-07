@@ -20,14 +20,23 @@ class _EditTaskWidget extends State<EditTaskWidget> {
   final formKey = GlobalKey<FormState>();
   var titleController = TextEditingController();
   var descriptionController = TextEditingController();
+  late TaskModel args;
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+      args = ModalRoute.of(context)?.settings.arguments as TaskModel;
+      titleController.text = args.title;
+      descriptionController.text = args.description;
+      selectedDate = DateTime.fromMicrosecondsSinceEpoch(args.date);
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
     var provider = Provider.of<AppProvider>(context);
-    var args = ModalRoute.of(context)?.settings.arguments as TaskModel;
-    titleController.text = args.title;
-    descriptionController.text = args.description;
-    selectedDate = DateTime.fromMicrosecondsSinceEpoch(args.date);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -127,13 +136,10 @@ class _EditTaskWidget extends State<EditTaskWidget> {
               ElevatedButton(
                 onPressed: () {
                   if (formKey.currentState!.validate()) {
-                    updateTaskFromFirebase(toJson: {
-                      'id': args.id,
-                      'title': titleController.text,
-                      'description': descriptionController.text,
-                      'date': args.date,
-                      'isDone': args.isDone
-                    });
+                    args.title = titleController.text;
+                    args.description = descriptionController.text;
+                    args.date = selectedDate.microsecondsSinceEpoch;
+                    updateTaskFromFirebase(args);
                     Fluttertoast.showToast(
                         msg: 'Task updated successfully',
                         toastLength: Toast.LENGTH_LONG,

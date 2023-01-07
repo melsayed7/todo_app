@@ -63,7 +63,9 @@ class ItemTaskWidget extends StatelessWidget {
                 Container(
                   height: 62,
                   width: 4,
-                  color: MyColor.primaryLightColor,
+                  color: taskModel.isDone == true
+                      ? MyColor.greenColor
+                      : MyColor.primaryLightColor,
                 ),
                 Flexible(
                   child: Padding(
